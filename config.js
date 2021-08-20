@@ -1,8 +1,8 @@
-const url = '192.168.0.6';
+const server = '192.168.0.6';
 
 module.exports = {
-    url,
-    serverURL : `https://${url}`,
+    server,
+    serverURL : `https://${server}`,
     port : 2000,
     aligoAPI : 'aligo api',
     aligoUserId : 'userId',
