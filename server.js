@@ -17,8 +17,6 @@ const AuthData = {
 const options = {
     key : fs.readFileSync('./keys/private.pem'),
     cert : fs.readFileSync('./keys/public.pem'),
-    ca : fs.readFileSync('./keys/chain.pem'),
-    rejectUnauthorized: false,
 }
 
 app.get('/', (req, res) => {
