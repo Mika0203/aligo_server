@@ -7,7 +7,7 @@ const aligoapi = require('aligoapi');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended : false}));
+app.use(express.urlencoded({ extended: false }));
 
 const AuthData = {
     key: config.aligoAPI,
@@ -15,13 +15,34 @@ const AuthData = {
 }
 
 const options = {
-    key : fs.readFileSync('./keys/private.pem'),
-    cert : fs.readFileSync('./keys/public.pem'),
+    key: fs.readFileSync('./keys/private.pem'),
+    cert: fs.readFileSync('./keys/public.pem'),
 }
 
 app.get('/', (req, res) => {
     res.send("hello aligo server!");
 });
+
+app.get('/cash', async (req, res) => {
+    const form = new FormData();
+    const formHeaders = form.getHeaders();
+
+    const data = {};
+    data.key = config.aligoAPI;
+    data.user_id = config.aligoUserId;
+
+    for (let key in data) {
+        form.append(key, data[key]);
+    }
+
+    const url = 'https://apis.aligo.in/remain/';
+    const ret = await axios.post(url, form, {
+        headers: { ...formHeaders }
+    });
+
+    res.status(200).send(ret.data);
+});
+
 
 app.post('/', async (req, res) => {
     const reso = await send(req);
